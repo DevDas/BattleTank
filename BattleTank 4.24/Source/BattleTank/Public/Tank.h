@@ -38,14 +38,19 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetTurretReference(UTankTurret* TurretToSet);
 
-	UPROPERTY(EditAnywhere, Category = Firing)
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
 	float LaunchSpeed = 5000; // Sensible Starting Value of 1000 m/s
 
 	UFUNCTION(BlueprintCallable, Category = Firing) // Call From Tank_BP
 	void Fire();
 
-	UPROPERTY(EditAnywhere, Category = Setup)
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
 	UClass* ProjectileBlueprint;  // can be set any class from tank_bp (self) because here is UClass*
 
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	float ReloadTimeInSeconds = 3;
+
 	UTankBarrel* Barrel = nullptr;
+
+	double LastFireTime = 0;
 };
