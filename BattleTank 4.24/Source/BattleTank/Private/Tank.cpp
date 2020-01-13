@@ -5,6 +5,7 @@
 #include "TankBarrel.h"
 #include "TankTurret.h"
 #include "TankAimingComponent.h"
+#include "TankMovementComponent.h"
 #include <BattleTank\Public\Projectile.h>
 
 
@@ -16,7 +17,6 @@ ATank::ATank()
 
 	// No Need To Protect Points as added at const
 	TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));
-
 }
 
 // Called when the game starts or when spawned
