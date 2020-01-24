@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankPlayerController.h"
+#include "TankAimingComponent.h"
 #include "BattleTank.h"
 #include "Tank.h"
 #include "Engine/World.h"
@@ -8,6 +9,7 @@
 //tick
 	//super
 	
+
 void ATankPlayerController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
@@ -18,6 +20,16 @@ void ATankPlayerController::Tick(float DeltaTime)
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
+
+	auto AimingComponent = GetControlledTank()->FindComponentByClass<UTankAimingComponent>();
+	if (ensure(AimingComponent))
+	{
+		FoundAimingComponent(AimingComponent);
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Player Controller Can't Find Aiming Component At Begin"))
+	}
 }
 
 ATank* ATankPlayerController::GetControlledTank() const
@@ -27,7 +39,7 @@ ATank* ATankPlayerController::GetControlledTank() const
 
 void ATankPlayerController::AimToWardsCrosshair()
 {
-	if (!GetControlledTank()) { return; }
+	if (!ensure(GetControlledTank())) { return; }
 
 	//auto Time = GetWorld()->GetTimeSeconds();
 	//UE_LOG(LogTemp, Warning, TEXT("%f : AimTowardsCrosshair Called"), Time)

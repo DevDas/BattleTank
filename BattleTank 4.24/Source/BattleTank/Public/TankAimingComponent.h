@@ -27,7 +27,7 @@ class BATTLETANK_API UTankAimingComponent : public UActorComponent
 
 public:	
 	UFUNCTION(BlueprintCallable, Category = "Setup")
-	void Initialise(UTankBarrel* BarrelTrackToSet, UTankTurret* TurretTrackToSet);
+	void Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
 
 protected:
 	// Called when the game starts
