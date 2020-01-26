@@ -10,7 +10,6 @@
 class UTankBarrel;
 class UTankAimingComponent;
 class UTankTurret;
-class UTankMovementComponent;
 
 UCLASS()
 class BATTLETANK_API ATank : public APawn
@@ -30,6 +29,7 @@ protected:
 public:
 	void AimAt(FVector HitLocation);
 
+	// TODO Remove Once Firing Is Moved To Aiming Component
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float LaunchSpeed = 5000; // Sensible Starting Value of 1000 m/s
 
