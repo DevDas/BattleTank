@@ -8,7 +8,6 @@
 
 // Forward Declarations
 class UTankBarrel;
-class UTankAimingComponent;
 class UTankTurret;
 
 UCLASS()
@@ -22,16 +21,8 @@ private:
 
 	virtual void BeginPlay() override;
 
-protected:
-	UPROPERTY(BlueprintReadOnly)
-	UTankAimingComponent* TankAimingComponent = nullptr;
-
 public:
-	void AimAt(FVector HitLocation);
-
-	// TODO Remove Once Firing Is Moved To Aiming Component
-	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-	float LaunchSpeed = 5000; // Sensible Starting Value of 1000 m/s
+	
 
 	UFUNCTION(BlueprintCallable, Category = "Firing") // Call From Tank_BP
 	void Fire();
