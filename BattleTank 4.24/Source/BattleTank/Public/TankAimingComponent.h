@@ -9,6 +9,7 @@
 // Forward Declaration
 class UTankBarrel; 
 class UTankTurret;
+class AProjectile;
 
 // Enum For Aiming State
 UENUM()
@@ -41,19 +42,27 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	void AimAt(FVector HitLocation);
+
+	UFUNCTION(BlueprintCallable, Category = "Firing") // Call From Tank_BP
+	void Fire();
 	
 private:
 	// Sets default values for this component's properties
 	UTankAimingComponent();
 
-	UTankBarrel* Barrel = nullptr;
-
-	UTankTurret* Turret = nullptr;
-
 	void MoveBarrelTowards(FVector AimDirection);
 
-	// TODO Remove Once Firing Is Moved To Aiming Component
-	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-	float LaunchSpeed = 5000; // Sensible Starting Value of 1000 m/s
+	UTankBarrel* Barrel = nullptr;
+	UTankTurret* Turret = nullptr;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	float LaunchSpeed = 5000; 
+//
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	UClass* ProjectileBlueprint;  // can be set any class from tank_bp (self) because here is UClass*
+
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	float ReloadTimeInSeconds = 3;
+
+	double LastFireTime = 0;
 };
