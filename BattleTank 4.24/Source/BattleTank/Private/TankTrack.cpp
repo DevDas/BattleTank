@@ -6,7 +6,7 @@
 
 UTankTrack::UTankTrack()
 {
-	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bCanEverTick = false;
 }
 
 void UTankTrack::BeginPlay()
@@ -18,15 +18,21 @@ void UTankTrack::BeginPlay()
 
 void UTankTrack::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
-	UE_LOG(LogTemp, Warning, TEXT("I'm Hit, I'm Hit!"))
+	// Drive The Tracks
+	DriveTrack();
+	// Apply Sideways Force
+	ApplySidewaysForce();
+	// To Stop The Tank
+	CurrentThrottle = 0;
 }
 
-void UTankTrack::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+void UTankTrack::ApplySidewaysForce()
 {
 	// Calculate The Slippage Speed
 	auto SlippageSpeed = FVector::DotProduct(GetRightVector(), GetComponentVelocity());
-	
+
 	// Work-out Therequired acceleration this frame to correct
+	auto DeltaTime = GetWorld()->GetTimeSeconds();
 	auto CorrectionAcceleration = -(SlippageSpeed / DeltaTime * GetRightVector()); // accelaration unit is m/s2
 
 	// Calculate and apply Sideways (F = ma)
@@ -37,8 +43,15 @@ void UTankTrack::TickComponent(float DeltaTime, enum ELevelTick TickType, FActor
 
 void UTankTrack::SetThrottle(float Throttle)
 {
-	auto ForceApplied = GetForwardVector() * Throttle * TrackmaxDrivingForce;
+	// If We Press Multiple Button Then The Throttle is Greater Than 1 , To Fix This
+	CurrentThrottle = FMath::Clamp<float>((CurrentThrottle + Throttle), -1, +1); 
+}
+
+void UTankTrack::DriveTrack()
+{
+	auto ForceApplied = GetForwardVector() * CurrentThrottle * TrackmaxDrivingForce;
 	auto ForceLocation = GetComponentLocation();
 	auto TankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
 	TankRoot->AddForceAtLocation(ForceApplied, ForceLocation);
+	UE_LOG(LogTemp, Warning, TEXT("%s Current Throttle "), CurrentThrottle)
 }
