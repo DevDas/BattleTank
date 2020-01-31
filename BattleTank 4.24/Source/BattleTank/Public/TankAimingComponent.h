@@ -37,6 +37,10 @@ protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EFiringState FiringState = EFiringState::Reloading;
 
+
+	UPROPERTY(BlueprintReadWrite)
+	UClass* ProjectileBlueprint;  // can be set any class from tank_bp (self) because here is UClass*
+
 public:	
 	void AimAt(FVector HitLocation);
 
@@ -59,8 +63,6 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float LaunchSpeed = 5000; 
 //
-	UPROPERTY(EditDefaultsOnly, Category = "Setup")
-	UClass* ProjectileBlueprint;  // can be set any class from tank_bp (self) because here is UClass*
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float ReloadTimeInSeconds = 3;

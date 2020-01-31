@@ -52,6 +52,8 @@ bool UTankAimingComponent::IsBarrelMoving()
 // Called when the game starts
 void UTankAimingComponent::BeginPlay()
 {
+	Super::BeginPlay();
+
 	// So That First Fire Is After Initial Reloada
 	LastFireTime = FPlatformTime::Seconds();
 }
