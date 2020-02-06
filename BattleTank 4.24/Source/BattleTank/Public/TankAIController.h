@@ -20,7 +20,13 @@ class BATTLETANK_API ATankAIController : public AAIController
 private:
      virtual void BeginPlay() override;
 
+     virtual void SetPawn(APawn* InPawn) override; // When AI is Possessing Then This Function Will called
+
      virtual void Tick(float DeltaSeconds) override;
+
+     UFUNCTION()
+     void OnPossedTankDeath();
+
 protected:
     // How Close Can The AI Tank Get
     UPROPERTY(EditDefaultsOnly, Category = "Setup") 

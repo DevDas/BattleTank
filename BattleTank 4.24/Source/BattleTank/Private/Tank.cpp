@@ -9,6 +9,11 @@
 #include <BattleTank\Public\TankAimingComponent.h>
 
 
+float ATank::GetHealthPercent() const
+{
+	return (float)CurrentHealth / (float)StartingHealth;
+}
+
 // Sets default values
 ATank::ATank()
 {
@@ -18,17 +23,17 @@ ATank::ATank()
 
 float ATank::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser)
 {
-	int32 DamagePoints = FPlatformMath::RoundToInt(DamageAmount);
+	// Damage Amount is coming from Projectile.h
+	int32 DamagePoints = FPlatformMath::RoundToInt(DamageAmount);  // changing float to int32
 	int32 DamageToApply = FMath::Clamp(DamagePoints, 0, CurrentHealth);
 
 	CurrentHealth -= DamageToApply;
 
 	if (CurrentHealth <= 0)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("You Died"))
+		OnDeath.Broadcast();
 	}
 
-	UE_LOG(LogTemp, Warning, TEXT("DamageAmount = %f, DamageToApply = %i"), DamageAmount, DamageToApply)
 
 	return DamageToApply;
 }
