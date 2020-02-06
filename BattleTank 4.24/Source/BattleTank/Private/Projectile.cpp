@@ -4,10 +4,14 @@
 #include "Projectile.h"
 #include "ParticleHelper.h"
 #include "Particles/ParticleSystem.h"
+#include "Kismet/GameplayStatics.h"
+#include "GameFramework/DamageType.h"
+#include "GameFramework/Actor.h"
 #include "Particles/ParticleSystemComponent.h"
 #include "PhysicsEngine/RadialForceComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Engine/World.h"
+
 
 // Sets default values
 AProjectile::AProjectile() // constructer
@@ -46,10 +50,19 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, U
 {
 	LaunchBlast->Deactivate();
 	ImpactBlast->Activate();
-	ExplosionForce->FireImpulse();
+	ExplosionForce->FireImpulse(); // method
 
 	SetRootComponent(ImpactBlast);
 	CollisionMesh->DestroyComponent(); // instance Destroy mesh,but it is
+
+	UGameplayStatics::ApplyRadialDamage(
+		this,
+		ProjectileDamage,
+		GetActorLocation(),
+		ExplosionForce->Radius, // for consistancy
+		UDamageType::StaticClass(),
+		TArray<AActor>() // damage all actor thats why its empty
+		);
 
 	FTimerHandle Timer;
 	GetWorld()->GetTimerManager().SetTimer(Timer, this, &AProjectile::OnTimerExpire, DestroyDelay, false); // Destroy The Actor Properly
