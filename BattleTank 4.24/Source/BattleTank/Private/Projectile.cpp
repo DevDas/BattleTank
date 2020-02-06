@@ -61,7 +61,7 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, U
 		GetActorLocation(),
 		ExplosionForce->Radius, // for consistancy
 		UDamageType::StaticClass(),
-		TArray<AActor>() // damage all actor thats why its empty
+		TArray<AActor*>() // damage all actor thats why its empty
 		);
 
 	FTimerHandle Timer;
