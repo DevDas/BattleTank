@@ -30,8 +30,11 @@ void ATankAIController::SetPawn(APawn* InPawn)
 
 void ATankAIController::OnPossedTankDeath()
 {
+	if (!ensure(GetPawn())) { return; } // TODO remove if ok
 
-	UE_LOG(LogTemp, Warning, TEXT("Okkkkkkkkkkkkkkkkkkkkkkk!!!!!!!!!"))
+	GetPawn()->DetachFromControllerPendingDestroy(); // Method
+
+	UE_LOG(LogTemp, Warning, TEXT("AI Died!!!!!!!!!!!!!!"))
 }
 
 void ATankAIController::Tick(float DeltaSeconds)

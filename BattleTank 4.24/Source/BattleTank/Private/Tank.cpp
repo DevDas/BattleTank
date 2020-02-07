@@ -21,6 +21,13 @@ ATank::ATank()
 	PrimaryActorTick.bCanEverTick = false;
 }
 
+void ATank::BeginPlay()
+{
+	Super::BeginPlay();
+
+	CurrentHealth = StartingHealth;
+}
+
 float ATank::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser)
 {
 	// Damage Amount is coming from Projectile.h
@@ -33,7 +40,5 @@ float ATank::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEve
 	{
 		OnDeath.Broadcast();
 	}
-
-
 	return DamageToApply;
 }
