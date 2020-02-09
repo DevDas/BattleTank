@@ -20,14 +20,15 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-	
+	UPROPERTY(BlueprintReadWrite)
+	UClass* SpawnClass;
 
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
 private:
 	// config of the class
-	UPROPERTY(EditDefaultsOnly, Category = "Setup")
-	TSubclassOf<AActor> SpawnClass;
+	//UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	//TSubclassOf<AActor> SpawnClass;
+		
 };

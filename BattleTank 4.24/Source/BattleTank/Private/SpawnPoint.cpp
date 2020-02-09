@@ -2,9 +2,8 @@
 
 
 #include "SpawnPoint.h"
-#include "Engine/World.h"
 #include "Kismet\GameplayStatics.h"
-
+#include "Engine/World.h"
 
 // Sets default values for this component's properties
 USpawnPoint::USpawnPoint()
@@ -13,7 +12,9 @@ USpawnPoint::USpawnPoint()
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 
+	// ...
 }
+
 
 // Called when the game starts
 void USpawnPoint::BeginPlay()
