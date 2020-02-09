@@ -30,7 +30,7 @@ void ASprungWheel::BeginPlay()
 {
 	Super::BeginPlay();
 
-	//SetupConstraint();
+	SetupConstraint();
 }
 
 void ASprungWheel::SetupConstraint()
