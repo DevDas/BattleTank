@@ -43,7 +43,6 @@ void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickTy
 	{
 		FiringState = EFiringState::Locked;
 	}
-	// TODO Handle Aiming and Locked States
 }
 
 bool UTankAimingComponent::IsBarrelMoving()
@@ -58,7 +57,7 @@ void UTankAimingComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// So That First Fire Is After Initial Reloada
+	// So That First Fire Is After Initial Reload
 	LastFireTime = FPlatformTime::Seconds();
 }
 
@@ -124,7 +123,7 @@ void UTankAimingComponent::Fire()
 {
 	if (FiringState == EFiringState::Aiming || FiringState == EFiringState::Locked)
 	{
-		// spawn a projectie at the socket location
+		// spawn a projectile at the socket location
 		if (!ensure(Barrel)) { return; }
 		if (!ensure(ProjectileBlueprint)) { return; }
 		auto Projectile = GetWorld()->SpawnActor<AProjectile>(
